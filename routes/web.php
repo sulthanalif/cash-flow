@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\TransactionController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -24,6 +25,8 @@ Route::middleware(['auth'])->group(function (){
 
     Route::resource('categories', CategoryController::class);
     Route::resource('wallets', WalletController::class);
+
+    Route::resource('transactions', TransactionController::class);
 });
 
 require __DIR__.'/settings.php';

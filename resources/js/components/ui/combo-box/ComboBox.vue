@@ -41,9 +41,9 @@ const open = ref(false)
 function handleSelect(currentValue: string) {
   // Jika diklik lagi, hapus seleksi (toggle), atau set nilai baru
   const newValue = currentValue === props.modelValue ? '' : currentValue
-  
+
   // Kirim nilai baru ke parent
-  emit('update:modelValue', newValue) 
+  emit('update:modelValue', newValue)
   open.value = false
 }
 </script>
@@ -55,7 +55,7 @@ function handleSelect(currentValue: string) {
         variant="outline"
         role="combobox"
         :aria-expanded="open"
-        class="w-[200px] justify-between"
+        class="w-full justify-between"
       >
         {{
           modelValue
@@ -65,7 +65,7 @@ function handleSelect(currentValue: string) {
         <ChevronsUpDownIcon class="ml-2 h-4 w-4 shrink-0 opacity-50" />
       </Button>
     </PopoverTrigger>
-    <PopoverContent class="w-[200px] p-0">
+    <PopoverContent class="w-full p-0">
       <Command>
         <CommandInput :placeholder="searchPlaceholder || 'Search...'" />
         <CommandList>

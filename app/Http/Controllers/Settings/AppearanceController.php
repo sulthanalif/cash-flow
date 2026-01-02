@@ -20,34 +20,34 @@ class AppearanceController extends Controller
     }
 
     public function store(Request $request)
-{
-    $request->validate([
-        'name_app' => 'nullable|string|max:255',
-        'icon_app' => 'nullable|image|mimes:jpg,jpeg,png,ico|max:2048',
-        'logo_app' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-    ]);
+    {
+        $request->validate([
+            'name_app' => 'nullable|string|max:255',
+            'icon_app' => 'nullable|image|mimes:jpg,jpeg,png,ico|max:2048',
+            'logo_app' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
 
-    $lastAppearance = Appearance::latest()->first();
+        $lastAppearance = Appearance::latest()->first();
 
-    if ($request->hasFile('icon_app')) {
-        $iconPath = $request->file('icon_app')->store('icons', 'public');
-    } else {
-        $iconPath = $lastAppearance?->icon_app; 
+        if ($request->hasFile('icon_app')) {
+            $iconPath = $request->file('icon_app')->store('icons', 'public');
+        } else {
+            $iconPath = $lastAppearance?->icon_app;
+        }
+
+        if ($request->hasFile('logo_app')) {
+            $logoPath = $request->file('logo_app')->store('logos', 'public');
+        } else {
+            $logoPath = $lastAppearance?->logo_app;
+        }
+
+        Appearance::create([
+            'edited_by' => $request->user()->id,
+            'name_app' => $request->input('name_app'),
+            'icon_app' => $iconPath,
+            'logo_app' => $logoPath,
+        ]);
+
+        return redirect()->back()->with('success', 'Appearance updated successfully.');
     }
-
-    if ($request->hasFile('logo_app')) {
-        $logoPath = $request->file('logo_app')->store('logos', 'public');
-    } else {
-        $logoPath = $lastAppearance?->logo_app; 
-    }
-
-    Appearance::create([
-        'edited_by' => $request->user()->id,
-        'name_app' => $request->input('name_app'), 
-        'icon_app' => $iconPath,
-        'logo_app' => $logoPath,
-    ]);
-
-    return redirect()->back()->with('success', 'Appearance updated successfully.');
-}
 }

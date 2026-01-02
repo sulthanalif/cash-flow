@@ -22,8 +22,8 @@ const props = defineProps<{
 
 <template>
   <Select>
-    <SelectTrigger class="w-[200px]">
-      <SelectValue :placeholder="placeholder" />       
+    <SelectTrigger class="w-full">
+      <SelectValue :placeholder="placeholder" />
     </SelectTrigger>
     <SelectContent>
       <SelectGroup>

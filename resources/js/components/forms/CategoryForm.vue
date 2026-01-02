@@ -60,8 +60,6 @@ const isLoading = ref(false);
 const onSubmit = () => {
     isLoading.value = true;
 
-    console.log(form);
-
     const url = form.id
         ? route('categories.update', form.id)
         : route('categories.store');
@@ -75,6 +73,8 @@ const onSubmit = () => {
                     ? 'Update Category Success'
                     : 'Create Category Success',
             );
+            form.reset();
+            form.clearErrors();
             closeSheet();
         },
         onError: (errors: any) => {

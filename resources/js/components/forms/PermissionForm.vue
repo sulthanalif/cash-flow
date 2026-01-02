@@ -54,6 +54,8 @@ const onSubmit = () => {
                     ? 'Update Permission Success'
                     : 'Create Permission Success',
             );
+            form.reset();
+            form.clearErrors();
             closeSheet();
         },
         onError: (errors: any) => {

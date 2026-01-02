@@ -58,6 +58,8 @@ const onSubmit = () => {
             toast.success(
                 form.id ? 'Update Role Success' : 'Create Role Success',
             );
+            form.reset();
+            form.clearErrors();
             closeSheet();
         },
         onError: (errors: any) => {

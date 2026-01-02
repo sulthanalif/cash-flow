@@ -38,7 +38,7 @@ const form = useForm<WalletForm>({
     user_id: auth.user.id,
     name: '',
     balance: 0,
-}); 
+});
 
 const isSheetOpen = ref(false);
 const titleSheet = ref('');
@@ -47,8 +47,6 @@ const isLoading = ref(false);
 
 const onSubmit = () => {
     isLoading.value = true;
-
-    console.log(form);
 
     const url = form.id
         ? route('wallets.update', form.id)
@@ -63,6 +61,8 @@ const onSubmit = () => {
                     ? 'Update Wallet Success'
                     : 'Create Wallet Success',
             );
+            form.reset();
+            form.clearErrors();
             closeSheet();
         },
         onError: (errors: any) => {

@@ -124,8 +124,8 @@ const breadcrumbs = [{ title: 'Users', href: '/users' }];
 
             <div class="flex justify-end items-center gap-2">
                 <div v-if="canCreate">
-                    <Button 
-                        class="w-32" 
+                    <Button
+                        class="w-32"
                         @click="userFormRef?.openCreateModal()"
                     >
                         Create
@@ -137,14 +137,14 @@ const breadcrumbs = [{ title: 'Users', href: '/users' }];
                 :data="props.users"
                 :columns="columns"
                 :actions="true"
-                :action-list="actionList" 
+                :action-list="actionList"
             />
 
         </div>
 
-        <UserForm 
-            ref="userFormRef" 
-            :role-options="rolesOptions" 
+        <UserForm
+            ref="userFormRef"
+            :role-options="rolesOptions"
         />
 
         <ConfirmDialog

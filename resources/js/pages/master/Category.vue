@@ -38,6 +38,8 @@ const deleteForm = useForm({
     type: '',
     description: ''
 });
+
+
 const isDeleteOpen = ref(false);
 const isDeleteLoading = ref(false);
 
@@ -116,21 +118,22 @@ const breadcrumbs = [{ title: 'Categories', href: '/categories' }];
             </div>
             <div class="flex justify-end items-center gap-2">
                 <div v-if="canCreate">
-                    <Button 
-                        class="w-32" 
+                    <Button
+                        class="w-32"
                         @click="categoryFormRef?.openCreateModal()"
                     >
                         Create
                     </Button>
                 </div>
             </div>
-          </div>          
+          </div>
 
             <DataTable
                 :data="props.categories"
                 :columns="columns"
                 :actions="true"
-                :action-list="actionList" 
+                :action-list="actionList"
+                :row-selection="true"
             />
         </div>
 

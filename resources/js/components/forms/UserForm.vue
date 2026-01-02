@@ -61,6 +61,8 @@ const onSubmit = () => {
         preserveScroll: true,
         onSuccess: () => {
             toast.success(form.id ? 'Update User Success' : 'Create User Success');
+            form.reset();
+            form.clearErrors();
             closeSheet();
         },
         onError: (errors: any) => {
@@ -86,7 +88,7 @@ const closeSheet = () => {
 const openCreateModal = () => {
     form.reset();
     form.clearErrors();
-    form.id = 0; 
+    form.id = 0;
     titleSheet.value = 'Create New User';
     descriptionSheet.value = 'Add a new user to the system and assign a role.';
     isSheetOpen.value = true;
@@ -100,7 +102,7 @@ const openEditModal = (user: User) => {
     form.password = ''; // Password dikosongkan saat edit (biasanya opsional di backend)
     // Ambil role pertama jika ada
     form.role = user.roles.length > 0 ? user.roles[0].name : '';
-    
+
     titleSheet.value = 'Edit User';
     descriptionSheet.value = 'Update user details and access level.';
     isSheetOpen.value = true;
@@ -115,7 +117,7 @@ defineExpose({
 <template>
     <Sheet v-model:open="isSheetOpen">
         <SheetContent class="w-full sm:max-w-md h-full flex flex-col p-0 gap-0">
-            
+
             <SheetHeader class="px-6 py-6 border-b">
                 <SheetTitle>{{ titleSheet }}</SheetTitle>
                 <SheetDescription>
@@ -125,7 +127,7 @@ defineExpose({
 
             <div class="flex-1 overflow-y-auto px-6 py-6">
                 <form id="userForm" @submit.prevent="onSubmit" class="flex flex-col gap-6">
-                    
+
                     <div class="grid gap-2">
                         <Label for="name" class="font-semibold">Full Name</Label>
                         <Input
@@ -165,13 +167,13 @@ defineExpose({
 
                     <div class="grid gap-2">
                         <Label for="password" class="font-semibold">
-                            Password 
+                            Password
                             <span v-if="form.id" class="text-xs font-normal text-muted-foreground ml-1">(Leave blank to keep current)</span>
                         </Label>
                         <Input
                             id="password"
                             type="password"
-                            :required="!form.id" 
+                            :required="!form.id"
                             placeholder="••••••••"
                             v-model="form.password"
                         />

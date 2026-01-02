@@ -17,11 +17,13 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RolePermissionSeeder::class,
             UserSeeder::class,
+            WalletSeeder::class,
+            CategorySeeder::class,
         ]);
 
         $options = [
             'edited_by' => 1,
-            'name_app' => "Starter Vue",
+            'name_app' => "Cash Flow",
         ];
 
         Appearance::create($options);

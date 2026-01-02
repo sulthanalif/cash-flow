@@ -13,9 +13,9 @@ import {
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
-import { Link, usePage } from '@inertiajs/vue3'; 
+import { Link, usePage } from '@inertiajs/vue3';
 import { BookOpen, Folder, LayoutGrid, Users, ShieldCheck, Wallet } from 'lucide-vue-next';
-import { computed } from 'vue'; 
+import { computed } from 'vue';
 import AppLogo from './AppLogo.vue';
 
 const page = usePage();
@@ -59,8 +59,15 @@ const rawMainNavItems: NavItemWithPermission[] = [
         permission: 'wallet-page',
     },
     {
+        title: 'Transactions',
+        href: route('transactions.index'),
+        icon: BookOpen,
+        isActive: route().current('transactions.*'),
+        // permission: 'transaction-page',
+    },
+    {
         title: 'Authentication',
-        href: '#', 
+        href: '#',
         icon: ShieldCheck,
         isActive: route().current('users.*') || route().current('roles.*') || route().current('permissions.*'),
         permission: ['user-page', 'role-page', 'permission-page'],
@@ -73,13 +80,13 @@ const rawMainNavItems: NavItemWithPermission[] = [
             },
             {
                 title: 'Roles',
-                href: route('roles.index'), 
+                href: route('roles.index'),
                 isActive: route().current('roles.*'),
                 permission: 'role-page',
             },
             {
                 title: 'Permissions',
-                href: route('permissions.index'), 
+                href: route('permissions.index'),
                 isActive: route().current('permissions.*'),
                 permission: 'permission-page',
             },
@@ -99,10 +106,10 @@ const mainNavItems = computed(() => {
                 items: filteredChildren
             };
         }
-        
+
         return item;
     }).filter(item => {
-        
+
         if (item.permission && !can(item.permission)) {
             return false;
         }

@@ -12,6 +12,12 @@ export interface BreadcrumbItem {
     href: string;
 }
 
+export interface FlashMessage {
+    success?: string;
+    error?: string;
+    message?: string;
+}
+
 export interface NavItem {
     title: string;
     href: string;
@@ -26,14 +32,14 @@ export interface NavItem {
     }[];
 }
 
-export type AppPageProps<
-    T extends Record<string, unknown> = Record<string, unknown>,
-> = T & {
-    name: string;
-    quote: { message: string; author: string };
-    auth: Auth;
-    sidebarOpen: boolean;
-};
+export type AppPageProps<T extends Record<string, unknown> = Record<string, unknown>> =
+    T & {
+        name: string;
+        quote: { message: string; author: string };
+        auth: Auth;
+        sidebarOpen: boolean;
+        flash: FlashMessage;
+    };
 
 export interface User {
     id: number;

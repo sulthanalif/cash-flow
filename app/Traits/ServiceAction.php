@@ -29,6 +29,10 @@ trait ServiceAction
             DB::commit();
 
 
+            if (method_exists($this, 'redirectAfterStore')) {
+                return $this->redirectAfterStore($model, $data);
+            }
+
             return redirect()->back()
                 ->with('success', 'Data berhasil ditambahkan, Yang Mulia!');
 
@@ -60,6 +64,10 @@ trait ServiceAction
 
             DB::commit();
 
+            if (method_exists($this, 'redirectAfterUpdate')) {
+                return $this->redirectAfterUpdate($model, $data);
+            }
+
             return redirect()->back()
                 ->with('success', 'Data berhasil diperbarui, Yang Mulia!');
 
@@ -87,6 +95,10 @@ trait ServiceAction
             }
 
             DB::commit();
+
+            if (method_exists($this, 'redirectAfterDestroy')) {
+                return $this->redirectAfterDestroy($model);
+            }
 
             return redirect()->back()
                 ->with('success', 'Data berhasil dihapus.');
