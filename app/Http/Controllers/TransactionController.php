@@ -47,6 +47,17 @@ class TransactionController extends Controller
         return $data;
     }
 
+    protected function afterStore(Transaction $model, array $data): void
+    {
+        $wallet = Wallet::find($data['wallet_id']);
+        if ($data['type'] === 'expense') {
+            $wallet->balance -= $data['amount'];
+        } else {
+            $wallet->balance += $data['amount'];
+        }
+        $wallet->save();
+    }
+
     protected function redirectAfterStore(Transaction $model, array $data): \Illuminate\Http\RedirectResponse
     {
         return redirect()->route('transactions.index')

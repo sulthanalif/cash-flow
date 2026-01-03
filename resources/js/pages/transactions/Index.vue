@@ -4,12 +4,13 @@ import { Head, usePage, useForm, Link } from '@inertiajs/vue3';
 import AppLayout from '@/layouts/AppLayout.vue';
 import DataTable, { type ActionItem } from '@/components/ui/data-table/DataTable.vue';
 import { type ColumnDef } from '@tanstack/vue-table';
-import { Pencil, Trash } from 'lucide-vue-next';
+import { Banknote, Calendar1Icon, Eye, HashIcon, NotepadText, Pencil, TagIcon, Trash, Wallet2Icon } from 'lucide-vue-next';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'vue-sonner';
 import ConfirmDialog from '@/components/AlertDialog.vue';
 import { route } from 'ziggy-js';
+import Modal from '@/components/Modal.vue';
 
 
 // Import Child Form
@@ -53,6 +54,31 @@ const deleteForm = useForm({
 });
 const isDeleteOpen = ref(false);
 const isDeleteLoading = ref(false);
+const isDetailOpen = ref(false);
+
+const detailTransaction = ref<Transaction | null>(null);
+
+const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0,
+    }).format(amount);
+};
+
+const formatDate = (date: string) => {
+    const d = new Date(date);
+    const months = [
+        'Januari','Februari','Maret','April','Mei','Juni',
+        'Juli','Agustus','September','Oktober','November','Desember'
+    ];
+    return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+const openDetailModal = (transaction: Transaction) => {
+    detailTransaction.value = transaction;
+    isDetailOpen.value = true;
+};
 
 const openDeleteAlert = (transaction: Transaction) => {
     deleteForm.id = transaction.id;
@@ -146,9 +172,9 @@ const columns: ColumnDef<Transaction>[] = [
 
 const actionList: ActionItem<Transaction>[] = [
     ...(canEdit.value ? [{
-        label: 'Edit Transaction',
-        icon: Pencil,
-        onClick: (transaction: Transaction) => console.log('Edit Transaction', transaction),
+        label: 'Detail Transaction',
+        icon: Eye,
+        onClick: (transaction: Transaction) => openDetailModal(transaction),
     }] : []),
     ...(canDelete.value ? [{
         label: 'Delete Transaction',
@@ -195,9 +221,78 @@ const breadcrumbs = [{ title: 'Transactions', href: '/transactions' }];
 
         </div>
 
-        <!-- <TransactionForm
-            ref="transactionFormRef"
-        /> -->
+        <Modal
+            v-model:open="isDetailOpen"
+            title="Transaction Details"
+            description="View the details of the selected transaction"
+        >
+            <div v-if="detailTransaction" class="space-y-6">
+                <div class="grid grid-cols-2 gap-y-6 gap-x-4">
+
+                    <div class="space-y-1">
+                        <div class="flex items-center text-sm text-gray-500 mb-1">
+                            <Calendar1Icon class="w-4 h-4 mr-1.5" />
+                            Date
+                        </div>
+                        <p class="font-medium ml-5.5">
+                            {{ formatDate(detailTransaction.date) }}
+                        </p>
+                    </div>
+
+                    <div class="space-y-1">
+                        <div class="flex items-center text-sm text-gray-500 mb-1">
+                            <HashIcon class="w-4 h-4 mr-1.5" />
+                            Transaction Code
+                        </div>
+                        <p class="font-medium ml-5.5">
+                            {{ detailTransaction.code }}
+                        </p>
+
+                    </div>
+
+                    <div class="space-y-1">
+                        <div class="flex items-center text-sm text-gray-500 mb-1">
+                            <TagIcon class="w-4 h-4 mr-1.5" />
+                            Category
+                        </div>
+                        <p class="font-medium ml-5.5">
+                            {{ detailTransaction.category.type +' - '+ detailTransaction.category.name }}
+                        </p>
+                    </div>
+
+                    <div class="space-y-1 ">
+                        <div class="flex items-center text-sm text-gray-500 mb-1">
+                            <Wallet2Icon class="w-4 h-4 mr-1.5" />
+                            Wallet
+                        </div>
+                        <p class="font-medium ml-5.5">
+                            {{ detailTransaction.wallet.name }}
+                        </p>
+                    </div>
+
+                    <div class="space-y-1 ">
+                        <div class="flex items-center text-sm text-gray-500 mb-1">
+                            <Banknote class="w-4 h-4 mr-1.5" />
+                            Amount
+                        </div>
+                        <p class="font-medium ml-5.5">
+                            {{ formatCurrency(detailTransaction.amount) }}
+                        </p>
+                    </div>
+
+                    <div class="space-y-1 ">
+                        <div class="flex items-center text-sm text-gray-500 mb-1">
+                            <NotepadText class="w-4 h-4 mr-1.5" />
+                            Description
+                        </div>
+                        <p class="font-medium ml-5.5">
+                            {{ detailTransaction.description }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </Modal>
 
         <ConfirmDialog
             v-model:open="isDeleteOpen"
