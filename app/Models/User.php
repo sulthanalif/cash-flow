@@ -58,4 +58,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Category::class, 'user_id');
     }
+
+    public function wallets(): HasMany
+    {
+        return $this->hasMany(Wallet::class, 'user_id');
+    }
 }
