@@ -14,6 +14,8 @@ class TransactionController extends Controller
 {
     use ServiceAction;
 
+    public $type;
+
     protected function getModelClass(): string { return Transaction::class; }
     protected function getRequestClass(): string { return TransactionRequest::class; }
 
@@ -41,6 +43,8 @@ class TransactionController extends Controller
 
     protected function beforeStore(array $data): array
     {
+        $this->type = $data['type'];
+
         unset($data['type']);
         $data['user_id'] = auth()->user()->id;
 
@@ -50,7 +54,7 @@ class TransactionController extends Controller
     protected function afterStore(Transaction $model, array $data): void
     {
         $wallet = Wallet::find($data['wallet_id']);
-        if ($data['type'] === 'expense') {
+        if ($this->type === 'expense') {
             $wallet->balance -= $data['amount'];
         } else {
             $wallet->balance += $data['amount'];
