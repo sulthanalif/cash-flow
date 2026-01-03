@@ -37,9 +37,9 @@ interface Transaction {
 const page = usePage();
 const authPermissions = page.props.auth.permissions;
 
-const canCreate = computed(() => Array.isArray(authPermissions) && authPermissions.includes('user-create'));
-const canEdit = computed(() => Array.isArray(authPermissions) && authPermissions.includes('user-edit'));
-const canDelete = computed(() => Array.isArray(authPermissions) && authPermissions.includes('user-delete'));
+const canCreate = computed(() => Array.isArray(authPermissions) && authPermissions.includes('transaction-create'));
+const canEdit = computed(() => Array.isArray(authPermissions) && authPermissions.includes('transaction-edit'));
+const canDelete = computed(() => Array.isArray(authPermissions) && authPermissions.includes('transaction-delete'));
 
 const props = defineProps<{ transactions: Transaction[] }>();
 

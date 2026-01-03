@@ -23,6 +23,7 @@ class TransactionRequest extends FormRequest
     {
         return [
             // 'user_id' => 'required|integer|exists:users,id',
+            'type' => 'required|in:expense,income',
             'date' => 'required|date',
             'category_id' => 'required|integer|exists:categories,id',
             'wallet_id' => 'required|integer|exists:wallets,id',

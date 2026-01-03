@@ -45,8 +45,13 @@ class RolePermissionSeeder extends Seeder
             'wallet-create',
             'wallet-edit',
             'wallet-delete',
+
+            'transaction-page',
+            'transaction-create',
+            'transaction-edit',
+            'transaction-delete',
         ];
-        
+
         $aPermissions = [
             'dashboard',
             'user-page',
@@ -66,6 +71,11 @@ class RolePermissionSeeder extends Seeder
             'wallet-create',
             'wallet-edit',
             'wallet-delete',
+
+            'transaction-page',
+            'transaction-create',
+            'transaction-edit',
+            'transaction-delete',
         ];
 
         foreach ($saPermissions as $permission) {
