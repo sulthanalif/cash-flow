@@ -33,7 +33,7 @@ const formatCurrency = (value: number) => {
 const transactionColumns = [
     { key: 'date', label: 'Date', class: 'w-[100px] md:w-[120px]' },
     { key: 'category', label: 'Category' },
-    { key: 'wallet', label: 'Wallet', class: 'hidden md:table-cell' }, // Sembunyikan wallet di HP agar tidak sempit
+    { key: 'wallet', label: 'Wallet' },
     { key: 'amount', label: 'Amount', class: 'text-right', cellClass: 'text-right font-medium' },
 ];
 
@@ -56,14 +56,14 @@ const balance = computed(() => props.incomeMonth - props.expenseMonth);
                     title="Total Income"
                     :value="formatCurrency(incomeMonth)"
                     :icon="TrendingUp"
-                    description="Bulan ini"
+                    description="This month"
                     trend="up"
                 />
                 <CardStat
                     title="Total Expense"
                     :value="formatCurrency(expenseMonth)"
                     :icon="TrendingDown"
-                    description="Bulan ini"
+                    description="This month"
                     trend="down"
                 />
                 <div class="sm:col-span-2 lg:col-span-1">
@@ -71,7 +71,7 @@ const balance = computed(() => props.incomeMonth - props.expenseMonth);
                         title="Net Cashflow"
                         :value="formatCurrency(balance)"
                         :icon="Wallet"
-                        description="Net Cashflow"
+                        description="Net Cashflow This month"
                         :trend="balance >= 0 ? 'up' : 'down'"
                     />
                 </div>
